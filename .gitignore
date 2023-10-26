@@ -1,0 +1,21 @@
+# root
+/setup.sql
+
+# client
+/client/node_modules
+/client/.pnp
+/client.pnp.js
+/client/coverage
+/client/build
+/client.DS_Store
+/client.env.local
+/client.env.development.local
+/client.env.test.local
+/client.env.production.local
+/clientnpm-debug.log*
+/clientyarn-debug.log*
+/clientyarn-error.log*
+
+# server
+/server/node_modules
+/server/build

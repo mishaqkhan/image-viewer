@@ -1,0 +1,15 @@
+{
+  "name": "image-viewer-server",
+  "version": "0.0.1",
+  "description": "",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
