@@ -16,6 +16,6 @@
 /clientyarn-debug.log*
 /clientyarn-error.log*
 
-# server
-/server/node_modules
-/server/build
+# api
+/api/node_modules
+/api/build

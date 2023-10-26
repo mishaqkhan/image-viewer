@@ -8,5 +8,5 @@
 client/node_modules
 client/npm-debug.log*
 
-#server
-server/node_modules
+#api
+api/node_modules
