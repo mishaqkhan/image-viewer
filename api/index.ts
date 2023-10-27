@@ -1,7 +1,10 @@
 import express from "express";
 import cors from "cors";
+import bodyParser from "body-parser";
 
-const PORT = process.env.API_PORT;
+import sampleData from "./sampleData";
+
+const PORT = process.env.API_PORT || 3001;
 
 const app = express();
 const http = require("http");
@@ -13,9 +16,11 @@ var corsOptions = {
 
 app.use(cors(corsOptions));
 
-app.get("/test-endpoint", (req, res) => {
-  console.log("Request recieved for /test-endpoint");
-  res.status(200).send("Recieved");
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+app.get("/images", (req, res) => {
+  res.status(200).json(sampleData);
 });
 
 server.listen(PORT, () => {
