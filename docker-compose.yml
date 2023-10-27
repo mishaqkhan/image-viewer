@@ -26,8 +26,7 @@ services:
       dockerfile: Dockerfile
       context: ./nginx
     ports:
-      - target: 80
-        published: 8000
+      - $NGINX_HOST_PORT:$NGINX_CONTAINER_PORT
 
   api:
     build:
@@ -49,7 +48,7 @@ services:
       args:
         REACT_APP_API_BASE_URL: $CLIENT_API_BASE_URL
         WDS_SOCKET_HOST: $NGINX_HOST
-        WDS_SOCKET_PORT: $NGINX_PORT
+        WDS_SOCKET_PORT: $NGINX_HOST_PORT
     volumes:
       - /app/node_modules
       - ./client:/usr/app
