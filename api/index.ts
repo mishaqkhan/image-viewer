@@ -1,5 +1,6 @@
-const express = require("express");
-const cors = require("cors");
+import express from "express";
+import cors from "cors";
+
 const app = express();
 const http = require("http");
 const server = http.createServer(app);
@@ -10,12 +11,11 @@ var corsOptions = {
 
 app.use(cors(corsOptions));
 
-app.get("/", (req, res) => {
-  console.log("Request recieved for /");
-  console.log("process.env: ", process.env.API_PORT);
+app.get("/test-endpoint", (req, res) => {
+  console.log("Request recieved for /test-endpoint");
   res.status(200).send("Recieved");
 });
 
 server.listen(process.env.API_PORT, () => {
-  console.log(`Listening on port 3001.`);
+  console.log(`Listening on port ${process.env.API_PORT}.`);
 });
