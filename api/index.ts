@@ -73,8 +73,11 @@ app.delete("/images/:id", async (req, res) => {
 });
 
 app.patch("/images/:id", async (req, res) => {
+  const { url, name, author, description } = req.body;
+  const updateSet = { url, name, author, description };
+
   try {
-    await db.imageModel.update(req.body, {
+    await db.imageModel.update(updateSet, {
       where: {
         id: req.params.id,
       },
