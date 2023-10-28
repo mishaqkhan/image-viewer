@@ -2,7 +2,7 @@
 
 ### Running the application
 
-Open up the terminal and run:
+Open up a terminal and from the project root run:
 
 ```shell
 docker compose up --build -V
