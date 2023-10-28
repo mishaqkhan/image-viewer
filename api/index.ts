@@ -24,6 +24,7 @@ db.sequelize.sync({ force: true });
 app.post("/image", async (req, res) => {
   try {
     await db.imageModel.create(req.body);
+
     res.status(200).json({ success: true });
   } catch (error) {
     res.status(404).json({ success: false, error });
@@ -32,7 +33,10 @@ app.post("/image", async (req, res) => {
 
 app.get("/images", async (req, res) => {
   try {
-    const allImages = await db.imageModel.findAll();
+    const allImages = await db.imageModel.findAll({
+      where: { isDeleted: false },
+    });
+
     res.status(200).json({ success: true, data: allImages });
   } catch (error) {
     res.status(404).json({ success: false, error });
@@ -41,8 +45,28 @@ app.get("/images", async (req, res) => {
 
 app.get("/images/:id", async (req, res) => {
   try {
-    const image = await db.imageModel.findByPk(req.params.id);
+    const image = await db.imageModel.findOne({
+      where: { id: req.params.id, isDeleted: false },
+    });
+
     res.status(200).json({ success: true, data: image });
+  } catch (error) {
+    res.status(404).json({ success: false, error });
+  }
+});
+
+app.delete("/images/:id", async (req, res) => {
+  try {
+    await db.imageModel.update(
+      { isDeleted: true },
+      {
+        where: {
+          id: req.params.id,
+        },
+      }
+    );
+
+    res.status(200).json({ success: true });
   } catch (error) {
     res.status(404).json({ success: false, error });
   }
