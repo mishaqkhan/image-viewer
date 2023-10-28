@@ -72,6 +72,20 @@ app.delete("/images/:id", async (req, res) => {
   }
 });
 
+app.patch("/images/:id", async (req, res) => {
+  try {
+    await db.imageModel.update(req.body, {
+      where: {
+        id: req.params.id,
+      },
+    });
+
+    res.status(200).json({ success: true });
+  } catch (error) {
+    res.status(404).json({ success: false, error });
+  }
+});
+
 server.listen(PORT, () => {
   console.log(`Listening on port ${PORT}.`);
 });
