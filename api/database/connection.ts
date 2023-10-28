@@ -1,5 +1,6 @@
-import { config } from "./db.config";
 import { Sequelize } from "sequelize";
+import ImageModel from "../models/image";
+import { config } from "./db.config";
 
 const sequelize = new Sequelize(config.DB, config.USER, config.PASSWORD, {
   host: config.HOST,
@@ -17,6 +18,6 @@ sequelize.authenticate().then(() => {
   console.log("Database connected...");
 });
 
-const imageModel = require("../models/image")(sequelize, Sequelize);
+const imageModel = ImageModel(sequelize);
 
 export { Sequelize, sequelize, imageModel };

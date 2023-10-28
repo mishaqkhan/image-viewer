@@ -1,28 +1,26 @@
+import { DataTypes } from "sequelize";
 import type { Sequelize } from "sequelize";
 
-module.exports = (
-  sequelize: Sequelize,
-  Sequelize: { BIGINT: any; STRING: any }
-) => {
+export default function (sequelize: Sequelize) {
   return sequelize.define("images", {
     id: {
-      type: Sequelize.BIGINT,
+      type: DataTypes.BIGINT,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true,
     },
     url: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     name: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
     },
     author: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
     },
     description: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
     },
   });
-};
+}
