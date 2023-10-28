@@ -1,10 +1,14 @@
 import { useState, useEffect, ReactElement } from "react";
 import { useNavigate } from "react-router-dom";
-import ImageList from "@mui/material/ImageList";
-import ImageListItem from "@mui/material/ImageListItem";
-import ImageListItemBar from "@mui/material/ImageListItemBar";
-import IconButton from "@mui/material/IconButton";
-import InfoIcon from "@mui/icons-material/Info";
+import {
+  Grid,
+  Card,
+  CardMedia,
+  CardContent,
+  Typography,
+  Button,
+  CardActions,
+} from "@mui/material";
 import { fetchWrapper } from "../utils/fetchWrapper";
 import type { Image as ImageType } from "../types";
 
@@ -32,34 +36,31 @@ function ImageTiles(): ReactElement {
   }, []);
 
   return (
-    <ImageList sx={{ width: "60%", height: "60%", margin: "0 auto" }}>
-      {images ? (
-        images.map((img) => (
-          <ImageListItem key={img.url}>
-            <img
-              src={`${img.url}?w=248&fit=crop&auto=format`}
-              alt={img.name}
-              loading="lazy"
-            />
-            <ImageListItemBar
-              title={img.name}
-              subtitle={img.author}
-              actionIcon={
-                <IconButton
-                  sx={{ color: "rgba(255, 255, 255, 0.54)" }}
-                  aria-label={`info about ${img.name}`}
-                  onClick={() => navigate(`/images/${img.id}`)}
-                >
-                  <InfoIcon />
-                </IconButton>
-              }
-            />
-          </ImageListItem>
-        ))
-      ) : (
-        <></>
-      )}
-    </ImageList>
+    <Grid container spacing={3} sx={{ width: "50%", margin: "0 auto" }}>
+      {images?.map((img) => (
+        <Grid item>
+          <Card sx={{ maxWidth: 350 }}>
+            <CardMedia component="img" alt={img.name} image={img.url} />
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="div">
+                {img.name}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {img.author}
+              </Typography>
+            </CardContent>
+            <CardActions>
+              <Button
+                size="small"
+                onClick={() => navigate(`/images/${img.id}`)}
+              >
+                Learn More
+              </Button>
+            </CardActions>
+          </Card>
+        </Grid>
+      ))}
+    </Grid>
   );
 }
 
