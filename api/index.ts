@@ -1,13 +1,13 @@
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
+import http from "http";
 
 import * as db from "./database";
 
 const PORT = process.env.API_PORT || 3001;
 
 const app = express();
-const http = require("http");
 const server = http.createServer(app);
 
 var corsOptions = {
