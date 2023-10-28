@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 
-import * as db from "./database/connection";
+import * as db from "./database";
 
 const PORT = process.env.API_PORT || 3001;
 
