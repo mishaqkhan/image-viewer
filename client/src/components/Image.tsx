@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import EditDialog from "./EditDialog";
 import LoadingAlert from "./LoadingAlert";
 import { fetchWrapper } from "../utils/fetchWrapper";
@@ -91,6 +92,16 @@ function Image(): ReactElement {
           </Card>
         </Grid>
         <Grid item container spacing={2}>
+          <Grid item>
+            <Button
+              variant="outlined"
+              startIcon={<ArrowBackIcon />}
+              color="info"
+              onClick={() => navigate("/")}
+            >
+              Go Back
+            </Button>
+          </Grid>
           <Grid item>
             <Button
               variant="contained"
