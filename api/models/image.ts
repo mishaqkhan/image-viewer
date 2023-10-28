@@ -22,5 +22,9 @@ export default function (sequelize: Sequelize) {
     description: {
       type: DataTypes.STRING,
     },
+    isDeleted: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
   });
 }

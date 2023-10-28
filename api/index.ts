@@ -31,8 +31,21 @@ app.post("/image", async (req, res) => {
 });
 
 app.get("/images", async (req, res) => {
-  const allImages = await db.imageModel.findAll();
-  res.status(200).json(allImages);
+  try {
+    const allImages = await db.imageModel.findAll();
+    res.status(200).json({ success: true, data: allImages });
+  } catch (error) {
+    res.status(404).json({ success: false, error });
+  }
+});
+
+app.get("/images/:id", async (req, res) => {
+  try {
+    const image = await db.imageModel.findByPk(req.params.id);
+    res.status(200).json({ success: true, data: image });
+  } catch (error) {
+    res.status(404).json({ success: false, error });
+  }
 });
 
 server.listen(PORT, () => {
