@@ -35,6 +35,7 @@ app.get("/images", async (req, res) => {
   try {
     const allImages = await db.imageModel.findAll({
       where: { isDeleted: false },
+      attributes: ["id", "url", "name", "author", "description"],
     });
 
     res.status(200).json({ success: true, data: allImages });
@@ -47,6 +48,7 @@ app.get("/images/:id", async (req, res) => {
   try {
     const image = await db.imageModel.findOne({
       where: { id: req.params.id, isDeleted: false },
+      attributes: ["id", "url", "name", "author", "description"],
     });
 
     res.status(200).json({ success: true, data: image });

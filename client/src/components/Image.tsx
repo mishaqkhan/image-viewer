@@ -1,4 +1,4 @@
-import { useState, useEffect, ReactElement } from "react";
+import { useState, useEffect, useCallback, ReactElement } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import {
   Grid,
@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import EditDialog from "./EditDialog";
 import LoadingAlert from "./LoadingAlert";
 import { fetchWrapper } from "../utils/fetchWrapper";
 import type { Image as ImageType } from "../types";
@@ -24,24 +25,26 @@ function Image(): ReactElement {
   const params = useParams();
   const navigate = useNavigate();
 
-  const [isLoading, setIsLoading] = useState(false);
   const [imageData, setImageData] = useState<ImageType>();
 
-  useEffect(() => {
-    async function fetchData() {
-      setIsLoading(true);
+  const [isOpenEditDialog, setIsOpenEditDialog] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-      const response: Response = await fetchWrapper(
-        "GET",
-        `${process.env.REACT_APP_API_BASE_URL}/images/${params.id}`
-      );
+  const fetchData = useCallback(async () => {
+    setIsLoading(true);
 
-      setImageData(response.data);
-      setIsLoading(false);
-    }
+    const response: Response = await fetchWrapper(
+      "GET",
+      `${process.env.REACT_APP_API_BASE_URL}/images/${params.id}`
+    );
 
-    fetchData();
+    setImageData(response.data);
+    setIsLoading(false);
   }, [params.id]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   const handleDelete = async () => {
     setIsLoading(true);
@@ -54,6 +57,11 @@ function Image(): ReactElement {
     setIsLoading(false);
 
     navigate("/");
+  };
+
+  const handleEditDialogSave = () => {
+    fetchData();
+    setIsOpenEditDialog(false);
   };
 
   return (
@@ -84,7 +92,12 @@ function Image(): ReactElement {
         </Grid>
         <Grid item container spacing={2}>
           <Grid item>
-            <Button variant="contained" endIcon={<EditIcon />} color="success">
+            <Button
+              variant="contained"
+              endIcon={<EditIcon />}
+              color="success"
+              onClick={() => setIsOpenEditDialog(true)}
+            >
               Edit
             </Button>
           </Grid>
@@ -101,6 +114,14 @@ function Image(): ReactElement {
         </Grid>
       </Grid>
       {isLoading && <LoadingAlert isOpen={isLoading} />}
+      {isOpenEditDialog && (
+        <EditDialog
+          initialValues={imageData}
+          isOpen={isOpenEditDialog}
+          onSave={handleEditDialogSave}
+          onClose={() => setIsOpenEditDialog(false)}
+        />
+      )}
     </>
   );
 }
