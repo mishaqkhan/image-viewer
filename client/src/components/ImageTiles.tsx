@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, ReactElement } from "react";
 import { useNavigate } from "react-router-dom";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
@@ -6,21 +6,26 @@ import ImageListItemBar from "@mui/material/ImageListItemBar";
 import IconButton from "@mui/material/IconButton";
 import InfoIcon from "@mui/icons-material/Info";
 import { fetchWrapper } from "../utils/fetchWrapper";
-import type { Image } from "../types";
+import type { Image as ImageType } from "../types";
 
-function ImageTiles() {
+type Response = {
+  success: boolean;
+  data: ImageType[];
+};
+
+function ImageTiles(): ReactElement {
   const navigate = useNavigate();
 
-  const [images, setImages] = useState<Image[]>();
+  const [images, setImages] = useState<ImageType[]>();
 
   useEffect(() => {
     const getImages = async () => {
-      const images: Image[] = await fetchWrapper(
+      const response: Response = await fetchWrapper(
         "GET",
         `${process.env.REACT_APP_API_BASE_URL}/images`
       );
 
-      setImages(images);
+      setImages(response.data);
     };
 
     getImages();
